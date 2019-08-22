@@ -1,11 +1,18 @@
 import random
 import sys
+import curses
 
 def battleship():
+    screen = curses.initscr()
     player_board = []
     comp_board = []
     player_view_board = []
     comp_view_board = []
+
+    def wait():
+        screen.addstr(40, 0, 'Press any key to continue...')
+        screen.refresh()
+        key = screen.getch()
 
     def make_player_board():
         for i in range(0, 10):
@@ -218,126 +225,253 @@ def battleship():
                     continue
 
     def make_player_ship1():
-        print 'We will generate your first ship. Please answer the following questions correctly, because if your answer doesn\'t meet our set requirements, the question will be asked again.'
+        screen.addstr(0, 0, 'We will generate your first ship. Please answer the following questions correctly, because if your answer doesn\'t meet our set requirements, the question will be asked again.\n')
+        screen.refresh()
+        wait()
         while True:
             try:
-                x = int(raw_input('Where do you want the first x coordinate of this ship to be? Enter a number between 0 to 9: '))
+                screen.clear()
+                prompt_str = 'Where do you want the first x coordinate of this ship to be? Enter a number between 0 to 9: '
+                l = len(prompt_str)
+                screen.addstr(0, 0, prompt_str)
+                x = int(screen.getstr(0, l))
                 while x >= 10 or x <= -1:
-                    print 'You didn\'t enter a number between 0 and 9.'
-                    x = int(raw_input('Where do you want the first x coordinate of this ship to be? Enter a number between 0 to 9: '))
+                    screen.clear()
+                    screen.addstr(0, 0, 'You didn\'t enter a number between 0 and 9.')
+                    screen.refresh()
+                    wait()
+                    screen.clear()
+                    screen.addstr(0, 0, prompt_str)
+                    x = int(screen.getstr(0, l))
                 break
             except:
-                print 'You didn\'t enter a number between 0 and 9.'
-
+                screen.clear()
+                screen.addstr(0, 0, 'You didn\'t enter a number between 0 and 9.')
+                screen.refresh()
+                wait()
+        screen.clear()
+        wait()
         while True:
             try:
-                y = int(raw_input('Where do you want the first y coordinate of this ship to be? Enter a number between 0 to 9: '))
+                prompt_str = 'Where do you want the first y coordinate of this ship to be? Enter a number between 0 to 9: '
+                l = len(prompt_str)
+                screen.addstr(0, 0, prompt_str)
+                y = int(screen.getstr(0, l))
                 while y >= 10 or y <= -1:
-                    print 'You didn\'t enter a number between 0 and 9.'
-                    y = int(raw_input('Where do you want the first y coordinate of this ship to be? Enter a number between 0 to 9: '))
+                    screen.clear()
+                    screen.addstr(0, 0, 'You didn\'t enter a number between 0 and 9.')
+                    screen.refresh()
+                    wait()
+                    screen.clear()
+                    screen.addstr(0, 0, prompt_str)
+                    y = int(screen.getstr(0, l))
                 break
             except:
-                print 'You didn\'t enter a number between 0 and 9.'
+                screen.clear()
+                screen.addstr(0, 0, 'You didn\'t enter a number between 0 and 9.')
+                screen.refresh()
+                wait()
+        screen.clear()
+        wait()
         xc = x
         yc = 9 - y
         if xc == 0 and yc != 0 and yc != 9:
             while True:
                 try:
-                    zc = raw_input('Which direction do you want your ship to extend in? Enter up, down, or right: ').lower()
+                    prompt_str = 'Which direction do you want your ship to extend in? Enter up, down, or right: '
+                    l = len(prompt_str)
+                    screen.addstr(0, 0, prompt_str)
+                    zc = screen.getstr(0, l).lower()
                     while zc != 'up' and zc != 'down' and zc != 'right':
-                        print 'You didn\'t enter a direction that was allowed.'
-                        zc = raw_input('Which direction do you want your ship to extend in? Enter up, down, or right: ').lower()
+                        screen.clear()
+                        screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                        screen.refresh()
+                        wait()
+                        screen.clear()
+                        screen.addstr(0, 0, prompt_str)
+                        zc = screen.getstr(0, l).lower()
                     break
                 except:
-                    print 'You didn\'t enter a direction that was allowed.'
+                    screen.clear()
+                    screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                    screen.refresh()
+                    wait()
 
         elif xc == 9 and yc != 0 and yc != 9:
             while True:
                 try:
-                    zc = raw_input('Which direction do you want your ship to extend in? Enter up, down, or left: ').lower()
+                    prompt_str = 'Which direction do you want your ship to extend in? Enter up, down, or left: '
+                    l = len(prompt_str)
+                    screen.addstr(0, 0, prompt_str)
+                    zc = screen.getstr(0, l).lower()
                     while zc != 'up' and zc != 'down' and zc != 'left':
-                        print 'You didn\'t enter a direction that was allowed.'
-                        zc = raw_input('Which direction do you want your ship to extend in? Enter up, down, or left: ').lower()
+                        screen.clear()
+                        screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                        screen.refresh()
+                        wait()
+                        screen.clear()
+                        screen.addstr(0, 0, prompt_str)
+                        zc = screen.getstr(0, l).lower()
                     break
                 except:
-                    print 'You didn\'t enter a direction that was allowed.'
+                    screen.clear()
+                    screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                    screen.refresh()
+                    wait()
 
         elif yc == 0 and xc != 0 and xc != 9:
             while True:
                 try:
-                    zc = raw_input('Which direction do you want your ship to extend in? Enter down, left, or right: ').lower()
+                    prompt_str = 'Which direction do you want your ship to extend in? Enter down, left, or right: '
+                    l = len(prompt_str)
+                    screen.addstr(0, 0, prompt_str)
+                    zc = screen.getstr(0, l).lower()
                     while zc != 'left' and zc != 'down' and zc != 'right':
-                        print 'You didn\'t enter a direction that was allowed.'
-                        zc = raw_input('Which direction do you want your ship to extend in? Enter down, left, or right: ').lower()
+                        screen.clear()
+                        screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                        screen.refresh()
+                        wait()
+                        screen.clear()
+                        screen.addstr(0, 0, prompt_str)
+                        zc = screen.getstr(0, l).lower()
                     break
                 except:
-                    print 'You didn\'t enter a direction that was allowed.'
+                    screen.clear()
+                    screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                    screen.refresh()
+                    wait()
 
         elif yc == 9 and xc != 0 and xc != 9:
             while True:
                 try:
-                    zc = raw_input('Which direction do you want your ship to extend in? Enter up, left, or right: ').lower()
-                    while zc != 'left' and zc != 'up' and zc != 'right':
-                        print 'You didn\'t enter a direction that was allowed.'
-                        zc = raw_input('Which direction do you want your ship to extend in? Enter up, left, or right: ').lower()
+                    prompt_str = 'Which direction do you want your ship to extend in? Enter up, down, or right: '
+                    l = len(prompt_str)
+                    screen.addstr(0, 0, prompt_str)
+                    zc = screen.getstr(0, l).lower()
+                    while zc != 'up' and zc != 'left' and zc != 'right':
+                        screen.clear()
+                        screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                        screen.refresh()
+                        wait()
+                        screen.clear()
+                        screen.addstr(0, 0, prompt_str)
+                        zc = screen.getstr(0, l).lower()
                     break
                 except:
-                    print 'You didn\'t enter a direction that was allowed.'
+                    screen.clear()
+                    screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                    screen.refresh()
+                    wait()
 
         elif xc == 0 and yc == 0:
             while True:
                 try:
-                    zc = raw_input('Which direction do you want your ship to extend in? Enter down or right: ').lower()
+                    prompt_str = 'Which direction do you want your ship to extend in? Enter down or right: '
+                    l = len(prompt_str)
+                    screen.addstr(0, 0, prompt_str)
+                    zc = screen.getstr(0, l).lower()
                     while zc != 'down' and zc != 'right':
-                        print 'You didn\'t enter a direction that was allowed.'
-                        zc = raw_input('Which direction do you want your ship to extend in? Enter down or right: ').lower()
+                        screen.clear()
+                        screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                        screen.refresh()
+                        wait()
+                        screen.clear()
+                        screen.addstr(0, 0, prompt_str)
+                        zc = screen.getstr(0, l).lower()
                     break
                 except:
-                    print 'You didn\'t enter a direction that was allowed.'
+                    screen.clear()
+                    screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                    screen.refresh()
+                    wait()
 
         elif xc == 0 and yc == 9:
             while True:
                 try:
-                    zc = raw_input('Which direction do you want your ship to extend in? Enter up or right: ').lower()
+                    prompt_str = 'Which direction do you want your ship to extend in? Enter up or right: '
+                    l = len(prompt_str)
+                    screen.addstr(0, 0, prompt_str)
+                    zc = screen.getstr(0, l).lower()
                     while zc != 'up' and zc != 'right':
-                        print 'You didn\'t enter a direction that was allowed.'
-                        zc = raw_input('Which direction do you want your ship to extend in? Enter up or right: ').lower()
+                        screen.clear()
+                        screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                        screen.refresh()
+                        wait()
+                        screen.clear()
+                        screen.addstr(0, 0, prompt_str)
+                        zc = screen.getstr(0, l).lower()
                     break
                 except:
-                    print 'You didn\'t enter a direction that was allowed.'
+                    screen.clear()
+                    screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                    screen.refresh()
+                    wait()
 
         elif xc == 9 and yc == 9:
             while True:
                 try:
-                    zc = raw_input('Which direction do you want your ship to extend in? Enter up or left: ').lower()
+                    prompt_str = 'Which direction do you want your ship to extend in? Enter up or left: '
+                    l = len(prompt_str)
+                    screen.addstr(0, 0, prompt_str)
+                    zc = screen.getstr(0, l).lower()
                     while zc != 'up' and zc != 'left':
-                        print 'You didn\'t enter a direction that was allowed.'
-                        zc = raw_input('Which direction do you want your ship to extend in? Enter up or left: ').lower()
+                        screen.clear()
+                        screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                        screen.refresh()
+                        wait()
+                        screen.clear()
+                        screen.addstr(0, 0, prompt_str)
+                        zc = screen.getstr(0, l).lower()
                     break
                 except:
-                    print 'You didn\'t enter a direction that was allowed.'
+                    screen.clear()
+                    screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                    screen.refresh()
+                    wait()
 
         elif xc == 9 and yc == 0:
             while True:
                 try:
-                    zc = raw_input('Which direction do you want your ship to extend in? Enter down or left: ').lower()
-                    while zc != 'down' and zc != 'left':
-                        print 'You didn\'t enter a direction that was allowed.'
-                        zc = raw_input('Which direction do you want your ship to extend in? Enter down or left: ').lower()
+                    prompt_str = 'Which direction do you want your ship to extend in? Enter down or left: '
+                    l = len(prompt_str)
+                    screen.addstr(0, 0, prompt_str)
+                    zc = screen.getstr(0, l).lower()
+                    while zc != 'left' and zc != 'down':
+                        screen.clear()
+                        screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                        screen.refresh()
+                        wait()
+                        screen.clear()
+                        screen.addstr(0, 0, prompt_str)
+                        zc = screen.getstr(0, l).lower()
                     break
                 except:
-                    print 'You didn\'t enter a direction that was allowed.'
+                    screen.clear()
+                    screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                    screen.refresh()
+                    wait()
 
         else:
             while True:
                 try:
-                    zc = raw_input('Which direction do you want your ship to extend in? Enter up, down, left, or right: ').lower()
-                    while zc != 'down' and zc != 'right' and zc != 'left' and zc != 'up':
-                        print 'You didn\'t enter a direction that was allowed.'
-                        zc = raw_input('Which direction do you want your ship to extend in? Enter up, down, left, or right: ').lower()
+                    prompt_str = 'Which direction do you want your ship to extend in? Enter up, down, left, or right: '
+                    l = len(prompt_str)
+                    screen.addstr(0, 0, prompt_str)
+                    zc = screen.getstr(0, l).lower()
+                    while zc != 'up' and zc != 'down' and zc != 'right' and zc != 'left':
+                        screen.clear()
+                        screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                        screen.refresh()
+                        wait()
+                        screen.clear()
+                        screen.addstr(0, 0, prompt_str)
+                        zc = screen.getstr(0, l).lower()
                     break
                 except:
-                    print 'You didn\'t enter a direction that was allowed.'
+                    screen.clear()
+                    screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                    screen.refresh()
+                    wait()
         if zc == 'up':
             yc2 = yc - 1
             player_board[yc][xc] = '1'
@@ -354,129 +488,264 @@ def battleship():
             xc2 = xc - 1
             player_board[yc][xc] = '1'
             player_board[yc][xc2] = '1'
+        screen.clear()
+        wait()
+        screen.clear()
+        screen.refresh()
 
     def make_player_ship2():
-        print 'Now we will generate your second ship. Please answer the following questions correctly, because if your answer doesn\'t meet our set requirements, the question will be asked again.'
+        screen.clear()
+        screen.refresh()
+        screen.addstr(0, 0, 'Now we will generate your second ship. Please answer the following questions correctly, because if your answer doesn\'t meet our set requirements, the question will be asked again.\n')
+        screen.refresh()
+        wait()
         while True:
             while True:
                 try:
-                    x = int(raw_input('Where do you want the first x coordinate of this ship to be? Enter a number between 0 to 9: '))
+                    screen.clear()
+                    prompt_str = 'Where do you want the first x coordinate of this ship to be? Enter a number between 0 to 9: '
+                    l = len(prompt_str)
+                    screen.addstr(0, 0, prompt_str)
+                    x = int(screen.getstr(0, l))
                     while x >= 10 or x <= -1:
-                        print 'You didn\'t enter a number between 0 and 9.'
-                        x = int(raw_input('Where do you want the first x coordinate of this ship to be? Enter a number between 0 to 9: '))
+                        screen.clear()
+                        screen.addstr(0, 0, 'You didn\'t enter a number between 0 and 9.')
+                        screen.refresh()
+                        wait()
+                        screen.clear()
+                        screen.addstr(0, 0, prompt_str)
+                        x = int(screen.getstr(0, l))
                     break
                 except:
-                    print 'You didn\'t enter a number between 0 and 9.'
-
+                    screen.clear()
+                    screen.addstr(0, 0, 'You didn\'t enter a number between 0 and 9.')
+                    screen.refresh()
+                    wait()
+            screen.clear()
+            wait()
             while True:
                 try:
-                    y = int(raw_input('Where do you want the first y coordinate of this ship to be? Enter a number between 0 to 9: '))
+                    prompt_str = 'Where do you want the first y coordinate of this ship to be? Enter a number between 0 to 9: '
+                    l = len(prompt_str)
+                    screen.addstr(0, 0, prompt_str)
+                    y = int(screen.getstr(0, l))
                     while y >= 10 or y <= -1:
-                        print 'You didn\'t enter a number between 0 and 9.'
-                        y = int(raw_input('Where do you want the first y coordinate of this ship to be? Enter a number between 0 to 9: '))
+                        screen.clear()
+                        screen.addstr(0, 0, 'You didn\'t enter a number between 0 and 9.')
+                        screen.refresh()
+                        wait()
+                        screen.clear()
+                        screen.addstr(0, 0, prompt_str)
+                        y = int(screen.getstr(0, l))
                     break
                 except:
-                    print 'You didn\'t enter a number between 0 and 9.'
+                    screen.clear()
+                    screen.addstr(0, 0, 'You didn\'t enter a number between 0 and 9.')
+                    screen.refresh()
+                    wait()
+            screen.clear()
+            wait()
             xc = x
             yc = 9 - y
             if xc <= 1 and yc != 1 and yc != 8 and yc != 0 and yc != 9:
                 while True:
                     try:
-                        zc = raw_input('Which direction do you want your ship to extend in? Enter up, down, or right: ').lower()
+                        prompt_str = 'Which direction do you want your ship to extend in? Enter up, down, or right: '
+                        l = len(prompt_str)
+                        screen.addstr(0, 0, prompt_str)
+                        zc = screen.getstr(0, l).lower()
                         while zc != 'up' and zc != 'down' and zc != 'right':
-                            print 'You didn\'t enter a direction that was allowed.'
-                            zc = raw_input('Which direction do you want your ship to extend in? Enter up, down, or right: ').lower()
+                            screen.clear()
+                            screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                            screen.refresh()
+                            wait()
+                            screen.clear()
+                            screen.addstr(0, 0, prompt_str)
+                            zc = screen.getstr(0, l).lower()
                         break
                     except:
-                        print 'You didn\'t enter a direction that was allowed.'
+                        screen.clear()
+                        screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                        screen.refresh()
+                        wait()
 
             elif xc >= 8 and yc != 1 and yc != 8 and yc != 0 and yc != 9:
                 while True:
                     try:
-                        zc = raw_input('Which direction do you want your ship to extend in? Enter up, down, or left: ').lower()
+                        prompt_str = 'Which direction do you want your ship to extend in? Enter up, down, or left: '
+                        l = len(prompt_str)
+                        screen.addstr(0, 0, prompt_str)
+                        zc = screen.getstr(0, l).lower()
                         while zc != 'up' and zc != 'down' and zc != 'left':
-                            print 'You didn\'t enter a direction that was allowed.'
-                            zc = raw_input('Which direction do you want your ship to extend in? Enter up, down, or left: ').lower()
+                            screen.clear()
+                            screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                            screen.refresh()
+                            wait()
+                            screen.clear()
+                            screen.addstr(0, 0, prompt_str)
+                            zc = screen.getstr(0, l).lower()
                         break
                     except:
-                        print 'You didn\'t enter a direction that was allowed.'
+                        screen.clear()
+                        screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                        screen.refresh()
+                        wait()
 
             elif yc <= 1 and xc != 1 and xc != 8 and xc != 0 and xc != 9:
                 while True:
                     try:
-                        zc = raw_input('Which direction do you want your ship to extend in? Enter down, left, or right: ').lower()
+                        prompt_str = 'Which direction do you want your ship to extend in? Enter down, left, or right: '
+                        l = len(prompt_str)
+                        screen.addstr(0, 0, prompt_str)
+                        zc = screen.getstr(0, l).lower()
                         while zc != 'left' and zc != 'down' and zc != 'right':
-                            print 'You didn\'t enter a direction that was allowed.'
-                            zc = raw_input('Which direction do you want your ship to extend in? Enter down, left, or right: ').lower()
+                            screen.clear()
+                            screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                            screen.refresh()
+                            wait()
+                            screen.clear()
+                            screen.addstr(0, 0, prompt_str)
+                            zc = screen.getstr(0, l).lower()
                         break
                     except:
-                        print 'You didn\'t enter a direction that was allowed.'
+                        screen.clear()
+                        screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                        screen.refresh()
+                        wait()
 
             elif yc >= 8 and xc != 1 and xc != 8 and xc != 0 and xc != 9:
                 while True:
                     try:
-                        zc = raw_input('Which direction do you want your ship to extend in? Enter up, left, or right: ').lower()
-                        while zc != 'left' and zc != 'up' and zc != 'right':
-                            print 'You didn\'t enter a direction that was allowed.'
-                            zc = raw_input('Which direction do you want your ship to extend in? Enter up, left, or right: ').lower()
+                        prompt_str = 'Which direction do you want your ship to extend in? Enter up, left, or right: '
+                        l = len(prompt_str)
+                        screen.addstr(0, 0, prompt_str)
+                        zc = screen.getstr(0, l).lower()
+                        while zc != 'up' and zc != 'left' and zc != 'right':
+                            screen.clear()
+                            screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                            screen.refresh()
+                            wait()
+                            screen.clear()
+                            screen.addstr(0, 0, prompt_str)
+                            zc = screen.getstr(0, l).lower()
                         break
                     except:
-                        print 'You didn\'t enter a direction that was allowed.'
+                        screen.clear()
+                        screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                        screen.refresh()
+                        wait()
 
             elif xc <= 1 and yc <= 1:
                 while True:
                     try:
-                        zc = raw_input('Which direction do you want your ship to extend in? Enter down or right: ').lower()
+                        prompt_str = 'Which direction do you want your ship to extend in? Enter down or right: '
+                        l = len(prompt_str)
+                        screen.addstr(0, 0, prompt_str)
+                        zc = screen.getstr(0, l).lower()
                         while zc != 'down' and zc != 'right':
-                            print 'You didn\'t enter a direction that was allowed.'
-                            zc = raw_input('Which direction do you want your ship to extend in? Enter down or right: ').lower()
+                            screen.clear()
+                            screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                            screen.refresh()
+                            wait()
+                            screen.clear()
+                            screen.addstr(0, 0, prompt_str)
+                            zc = screen.getstr(0, l).lower()
                         break
                     except:
-                        print 'You didn\'t enter a direction that was allowed.'
+                        screen.clear()
+                        screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                        screen.refresh()
+                        wait()
 
             elif xc <= 1 and yc >= 8:
                 while True:
                     try:
-                        zc = raw_input('Which direction do you want your ship to extend in? Enter up or right: ').lower()
+                        prompt_str = 'Which direction do you want your ship to extend in? Enter up or right: '
+                        l = len(prompt_str)
+                        screen.addstr(0, 0, prompt_str)
+                        zc = screen.getstr(0, l).lower()
                         while zc != 'up' and zc != 'right':
-                            print 'You didn\'t enter a direction that was allowed.'
-                            zc = raw_input('Which direction do you want your ship to extend in? Enter up or right: ').lower()
+                            screen.clear()
+                            screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                            screen.refresh()
+                            wait()
+                            screen.clear()
+                            screen.addstr(0, 0, prompt_str)
+                            zc = screen.getstr(0, l).lower()
                         break
                     except:
-                        print 'You didn\'t enter a direction that was allowed.'
+                        screen.clear()
+                        screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                        screen.refresh()
+                        wait()
 
             elif xc >= 8 and yc >= 8:
                 while True:
                     try:
-                        zc = raw_input('Which direction do you want your ship to extend in? Enter up or left: ').lower()
+                        prompt_str = 'Which direction do you want your ship to extend in? Enter up or left: '
+                        l = len(prompt_str)
+                        screen.addstr(0, 0, prompt_str)
+                        zc = screen.getstr(0, l).lower()
                         while zc != 'up' and zc != 'left':
-                            print 'You didn\'t enter a direction that was allowed.'
-                            zc = raw_input('Which direction do you want your ship to extend in? Enter up or left: ').lower()
+                            screen.clear()
+                            screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                            screen.refresh()
+                            wait()
+                            screen.clear()
+                            screen.addstr(0, 0, prompt_str)
+                            zc = screen.getstr(0, l).lower()
                         break
                     except:
-                        print 'You didn\'t enter a direction that was allowed.'
+                        screen.clear()
+                        screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                        screen.refresh()
+                        wait()
 
             elif xc >= 8 and yc <= 1:
                 while True:
                     try:
-                        zc = raw_input('Which direction do you want your ship to extend in? Enter down or left: ').lower()
+                        prompt_str = 'Which direction do you want your ship to extend in? Enter down or left: '
+                        l = len(prompt_str)
+                        screen.addstr(0, 0, prompt_str)
+                        zc = screen.getstr(0, l).lower()
                         while zc != 'down' and zc != 'left':
-                            print 'You didn\'t enter a direction that was allowed.'
-                            zc = raw_input('Which direction do you want your ship to extend in? Enter down or left: ').lower()
+                            screen.clear()
+                            screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                            screen.refresh()
+                            wait()
+                            screen.clear()
+                            screen.addstr(0, 0, prompt_str)
+                            zc = screen.getstr(0, l).lower()
                         break
                     except:
-                        print 'You didn\'t enter a direction that was allowed.'
+                        screen.clear()
+                        screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                        screen.refresh()
+                        wait()
 
             else:
                 while True:
                     try:
-                        zc = raw_input('Which direction do you want your ship to extend in? Enter up, down, left, or right: ').lower()
-                        while zc != 'down' and zc != 'right' and zc != 'left' and zc != 'up':
-                            print 'You didn\'t enter a direction that was allowed.'
-                            zc = raw_input('Which direction do you want your ship to extend in? Enter up, down, left, or right: ').lower()
+                        prompt_str = 'Which direction do you want your ship to extend in? Enter up, down, left, or right: '
+                        l = len(prompt_str)
+                        screen.addstr(0, 0, prompt_str)
+                        zc = screen.getstr(0, l).lower()
+                        while zc != 'up' and zc != 'down' and zc != 'left' and zc != 'right':
+                            screen.clear()
+                            screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                            screen.refresh()
+                            wait()
+                            screen.clear()
+                            screen.addstr(0, 0, prompt_str)
+                            zc = screen.getstr(0, l).lower()
                         break
                     except:
-                        print 'You didn\'t enter a direction that was allowed.'
+                        screen.clear()
+                        screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                        screen.refresh()
+                        wait()
+                screen.clear()
+                wait()
             if zc == 'up':
                 yc2 = yc - 1
                 yc3 = yc - 2
@@ -486,7 +755,8 @@ def battleship():
                     player_board[yc3][xc] = '2'
                     break
                 else:
-                    print 'Your coordinates for this ship are colliding with the coordinates for another ship. Please re-enter the coordinates carefully and pick a direction which won\'t collide with another ship.'
+                    screen.addstr('Your coordinates for this ship are colliding with the coordinates for another ship. Please re-enter the coordinates carefully and pick a direction which won\'t collide with another ship.')
+                    wait()
                     continue
             elif zc == 'down':
                 yc2 = yc + 1
@@ -497,7 +767,8 @@ def battleship():
                     player_board[yc3][xc] = '2'
                     break
                 else:
-                    print 'Your coordinates for this ship are colliding with the coordinates for another ship. Please re-enter the coordinates carefully and pick a direction which won\'t collide with another ship.'
+                    screen.addstr('Your coordinates for this ship are colliding with the coordinates for another ship. Please re-enter the coordinates carefully and pick a direction which won\'t collide with another ship.')
+                    wait()
                     continue
             elif zc == 'right':
                 xc2 = xc + 1
@@ -508,7 +779,8 @@ def battleship():
                     player_board[yc][xc3] = '2'
                     break
                 else:
-                    print 'Your coordinates for this ship are colliding with the coordinates for another ship. Please re-enter the coordinates carefully and pick a direction which won\'t collide with another ship.'
+                    screen.addstr('Your coordinates for this ship are colliding with the coordinates for another ship. Please re-enter the coordinates carefully and pick a direction which won\'t collide with another ship.')
+                    wait()
                     continue
             else:
                 xc2 = xc - 1
@@ -519,131 +791,265 @@ def battleship():
                     player_board[yc][xc3] = '2'
                     break
                 else:
-                    print 'Your coordinates for this ship are colliding with the coordinates for another ship. Please re-enter the coordinates carefully and pick a direction which won\'t collide with another ship.'
+                    screen.addstr('Your coordinates for this ship are colliding with the coordinates for another ship. Please re-enter the coordinates carefully and pick a direction which won\'t collide with another ship.')
+                    wait()
                     continue
+        screen.clear()
+        wait()
 
     def make_player_ship3():
-        print 'Now we will generate your third ship. Please answer the following questions correctly, because if your answer doesn\'t meet our set requirements, the question will be asked again.'
+        screen.clear()
+        screen.refresh()
+        screen.addstr(0, 0, 'Now we will generate your third ship. Please answer the following questions correctly, because if your answer doesn\'t meet our set requirements, the question will be asked again.\n')
+        screen.refresh()
+        wait()
         while True:
             while True:
                 try:
-                    x = int(raw_input('Where do you want the first x coordinate of this ship to be? Enter a number between 0 to 9: '))
+                    screen.clear()
+                    prompt_str = 'Where do you want the first x coordinate of this ship to be? Enter a number between 0 to 9: '
+                    l = len(prompt_str)
+                    screen.addstr(0, 0, prompt_str)
+                    x = int(screen.getstr(0, l))
                     while x >= 10 or x <= -1:
-                        print 'You didn\'t enter a number between 0 and 9.'
-                        x = int(raw_input('Where do you want the first x coordinate of this ship to be? Enter a number between 0 to 9: '))
+                        screen.clear()
+                        screen.addstr(0, 0, 'You didn\'t enter a number between 0 and 9.')
+                        screen.refresh()
+                        wait()
+                        screen.clear()
+                        screen.addstr(0, 0, prompt_str)
+                        x = int(screen.getstr(0, l))
                     break
                 except:
-                    print 'You didn\'t enter a number between 0 and 9.'
-
+                    screen.clear()
+                    screen.addstr(0, 0, 'You didn\'t enter a number between 0 and 9.')
+                    screen.refresh()
+                    wait()
+            screen.clear()
+            wait()
             while True:
                 try:
-                    y = int(raw_input('Where do you want the first y coordinate of this ship to be? Enter a number between 0 to 9: '))
+                    prompt_str = 'Where do you want the first y coordinate of this ship to be? Enter a number between 0 to 9: '
+                    l = len(prompt_str)
+                    screen.addstr(0, 0, prompt_str)
+                    y = int(screen.getstr(0, l))
                     while y >= 10 or y <= -1:
-                        print 'You didn\'t enter a number between 0 and 9.'
-                        y = int(raw_input('Where do you want the first y coordinate of this ship to be? Enter a number between 0 to 9: '))
+                        screen.clear()
+                        screen.addstr(0, 0, 'You didn\'t enter a number between 0 and 9.')
+                        screen.refresh()
+                        wait()
+                        screen.clear()
+                        screen.addstr(0, 0, prompt_str)
+                        y = int(screen.getstr(0, l))
                     break
                 except:
-                    print 'You didn\'t enter a number between 0 and 9.'
+                    screen.clear()
+                    screen.addstr(0, 0, 'You didn\'t enter a number between 0 and 9.')
+                    screen.refresh()
+                    wait()
+            screen.clear()
+            wait()
             xc = x
             yc = 9 - y
             if xc <= 1 and yc != 1 and yc != 8 and yc != 0 and yc != 9:
                 while True:
                     try:
-                        zc = raw_input('Which direction do you want your ship to extend in? Enter up, down, or right: ').lower()
+                        prompt_str = 'Which direction do you want your ship to extend in? Enter up, down, or right: '
+                        l = len(prompt_str)
+                        screen.addstr(0, 0, prompt_str)
+                        zc = screen.getstr(0, l).lower()
                         while zc != 'up' and zc != 'down' and zc != 'right':
-                            print 'You didn\'t enter a direction that was allowed.'
-                            zc = raw_input('Which direction do you want your ship to extend in? Enter up, down, or right: ').lower()
+                            screen.clear()
+                            screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                            screen.refresh()
+                            wait()
+                            screen.clear()
+                            screen.addstr(0, 0, prompt_str)
+                            zc = screen.getstr(0, l).lower()
                         break
                     except:
-                        print 'You didn\'t enter a direction that was allowed.'
+                        screen.clear()
+                        screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                        screen.refresh()
+                        wait()
 
             elif xc >= 8 and yc != 1 and yc != 8 and yc != 0 and yc != 9:
                 while True:
                     try:
-                        zc = raw_input('Which direction do you want your ship to extend in? Enter up, down, or left: ').lower()
+                        prompt_str = 'Which direction do you want your ship to extend in? Enter up, down, or left: '
+                        l = len(prompt_str)
+                        screen.addstr(0, 0, prompt_str)
+                        zc = screen.getstr(0, l).lower()
                         while zc != 'up' and zc != 'down' and zc != 'left':
-                            print 'You didn\'t enter a direction that was allowed.'
-                            zc = raw_input('Which direction do you want your ship to extend in? Enter up, down, or left: ').lower()
+                            screen.clear()
+                            screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                            screen.refresh()
+                            wait()
+                            screen.clear()
+                            screen.addstr(0, 0, prompt_str)
+                            zc = screen.getstr(0, l).lower()
                         break
                     except:
-                        print 'You didn\'t enter a direction that was allowed.'
+                        screen.clear()
+                        screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                        screen.refresh()
+                        wait()
 
             elif yc <= 1 and xc != 1 and xc != 8 and xc != 0 and xc != 9:
                 while True:
                     try:
-                        zc = raw_input('Which direction do you want your ship to extend in? Enter down, left, or right: ').lower()
+                        prompt_str = 'Which direction do you want your ship to extend in? Enter down, left, or right: '
+                        l = len(prompt_str)
+                        screen.addstr(0, 0, prompt_str)
+                        zc = screen.getstr(0, l).lower()
                         while zc != 'left' and zc != 'down' and zc != 'right':
-                            print 'You didn\'t enter a direction that was allowed.'
-                            zc = raw_input('Which direction do you want your ship to extend in? Enter down, left, or right: ').lower()
+                            screen.clear()
+                            screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                            screen.refresh()
+                            wait()
+                            screen.clear()
+                            screen.addstr(0, 0, prompt_str)
+                            zc = screen.getstr(0, l).lower()
                         break
                     except:
-                        print 'You didn\'t enter a direction that was allowed.'
+                        screen.clear()
+                        screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                        screen.refresh()
+                        wait()
 
             elif yc >= 8 and xc != 1 and xc != 8 and xc != 0 and xc != 9:
                 while True:
                     try:
-                        zc = raw_input('Which direction do you want your ship to extend in? Enter up, left, or right: ').lower()
-                        while zc != 'left' and zc != 'up' and zc != 'right':
-                            print 'You didn\'t enter a direction that was allowed.'
-                            zc = raw_input('Which direction do you want your ship to extend in? Enter up, left, or right: ').lower()
+                        prompt_str = 'Which direction do you want your ship to extend in? Enter up, left, or right: '
+                        l = len(prompt_str)
+                        screen.addstr(0, 0, prompt_str)
+                        zc = screen.getstr(0, l).lower()
+                        while zc != 'right' and zc != 'left' and zc != 'down':
+                            screen.clear()
+                            screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                            screen.refresh()
+                            wait()
+                            screen.clear()
+                            screen.addstr(0, 0, prompt_str)
+                            zc = screen.getstr(0, l).lower()
                         break
                     except:
-                        print 'You didn\'t enter a direction that was allowed.'
+                        screen.clear()
+                        screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                        screen.refresh()
+                        wait()
 
             elif xc <= 1 and yc <= 1:
                 while True:
                     try:
-                        zc = raw_input('Which direction do you want your ship to extend in? Enter down or right: ').lower()
+                        prompt_str = 'Which direction do you want your ship to extend in? Enter down or right: '
+                        l = len(prompt_str)
+                        screen.addstr(0, 0, prompt_str)
+                        zc = screen.getstr(0, l).lower()
                         while zc != 'down' and zc != 'right':
-                            print 'You didn\'t enter a direction that was allowed.'
-                            zc = raw_input('Which direction do you want your ship to extend in? Enter down or right: ').lower()
+                            screen.clear()
+                            screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                            screen.refresh()
+                            wait()
+                            screen.clear()
+                            screen.addstr(0, 0, prompt_str)
+                            zc = screen.getstr(0, l).lower()
                         break
                     except:
-                        print 'You didn\'t enter a direction that was allowed.'
+                        screen.clear()
+                        screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                        screen.refresh()
+                        wait()
 
             elif xc <= 1 and yc >= 8:
                 while True:
                     try:
-                        zc = raw_input('Which direction do you want your ship to extend in? Enter up or right: ').lower()
+                        prompt_str = 'Which direction do you want your ship to extend in? Enter up or right: '
+                        l = len(prompt_str)
+                        screen.addstr(0, 0, prompt_str)
+                        zc = screen.getstr(0, l).lower()
                         while zc != 'up' and zc != 'right':
-                            print 'You didn\'t enter a direction that was allowed.'
-                            zc = raw_input('Which direction do you want your ship to extend in? Enter up or right: ').lower()
+                            screen.clear()
+                            screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                            screen.refresh()
+                            wait()
+                            screen.clear()
+                            screen.addstr(0, 0, prompt_str)
+                            zc = screen.getstr(0, l).lower()
                         break
                     except:
-                        print 'You didn\'t enter a direction that was allowed.'
+                        screen.clear()
+                        screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                        screen.refresh()
+                        wait()
 
             elif xc >= 8 and yc >= 8:
                 while True:
                     try:
-                        zc = raw_input('Which direction do you want your ship to extend in? Enter up or left: ').lower()
+                        prompt_str = 'Which direction do you want your ship to extend in? Enter up or left: '
+                        l = len(prompt_str)
+                        screen.addstr(0, 0, prompt_str)
+                        zc = screen.getstr(0, l).lower()
                         while zc != 'up' and zc != 'left':
-                            print 'You didn\'t enter a direction that was allowed.'
-                            zc = raw_input('Which direction do you want your ship to extend in? Enter up or left: ').lower()
+                            screen.clear()
+                            screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                            screen.refresh()
+                            wait()
+                            screen.clear()
+                            screen.addstr(0, 0, prompt_str)
+                            zc = screen.getstr(0, l).lower()
                         break
                     except:
-                        print 'You didn\'t enter a direction that was allowed.'
+                        screen.clear()
+                        screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                        screen.refresh()
+                        wait()
 
             elif xc >= 8 and yc <= 1:
                 while True:
                     try:
-                        zc = raw_input('Which direction do you want your ship to extend in? Enter down or left: ').lower()
+                        prompt_str = 'Which direction do you want your ship to extend in? Enter down or left: '
+                        l = len(prompt_str)
+                        screen.addstr(0, 0, prompt_str)
+                        zc = screen.getstr(0, l).lower()
                         while zc != 'down' and zc != 'left':
-                            print 'You didn\'t enter a direction that was allowed.'
-                            zc = raw_input('Which direction do you want your ship to extend in? Enter down or left: ').lower()
+                            screen.clear()
+                            screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                            screen.refresh()
+                            wait()
+                            screen.clear()
+                            screen.addstr(0, 0, prompt_str)
+                            zc = screen.getstr(0, l).lower()
                         break
                     except:
-                        print 'You didn\'t enter a direction that was allowed.'
+                        screen.clear()
+                        screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                        screen.refresh()
+                        wait()
 
             else:
                 while True:
                     try:
-                        zc = raw_input('Which direction do you want your ship to extend in? Enter up, down, left, or right: ').lower()
-                        while zc != 'down' and zc != 'right' and zc != 'left' and zc != 'up':
-                            print 'You didn\'t enter a direction that was allowed.'
-                            zc = raw_input('Which direction do you want your ship to extend in? Enter up, down, left, or right: ').lower()
+                        prompt_str = 'Which direction do you want your ship to extend in? Enter up, down, left, or right: '
+                        l = len(prompt_str)
+                        screen.addstr(0, 0, prompt_str)
+                        zc = screen.getstr(0, l).lower()
+                        while zc != 'up' and zc != 'down' and zc != 'left' and zc != 'right':
+                            screen.clear()
+                            screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                            screen.refresh()
+                            wait()
+                            screen.clear()
+                            screen.addstr(0, 0, prompt_str)
+                            zc = screen.getstr(0, l).lower()
                         break
                     except:
-                        print 'You didn\'t enter a direction that was allowed.'
+                        screen.clear()
+                        screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                        screen.refresh()
+                        wait()
+                screen.clear()
+                wait()
             if zc == 'up':
                 yc2 = yc - 1
                 yc3 = yc - 2
@@ -653,7 +1059,8 @@ def battleship():
                     player_board[yc3][xc] = '3'
                     break
                 else:
-                    print 'Your coordinates for this ship are colliding with the coordinates for another ship. Please re-enter the coordinates carefully and pick a direction which won\'t collide with another ship.'
+                    screen.addstr('Your coordinates for this ship are colliding with the coordinates for another ship. Please re-enter the coordinates carefully and pick a direction which won\'t collide with another ship.')
+                    wait()
                     continue
             elif zc == 'down':
                 yc2 = yc + 1
@@ -664,7 +1071,8 @@ def battleship():
                     player_board[yc3][xc] = '3'
                     break
                 else:
-                    print 'Your coordinates for this ship are colliding with the coordinates for another ship. Please re-enter the coordinates carefully and pick a direction which won\'t collide with another ship.'
+                    screen.addstr('Your coordinates for this ship are colliding with the coordinates for another ship. Please re-enter the coordinates carefully and pick a direction which won\'t collide with another ship.')
+                    wait()
                     continue
             elif zc == 'right':
                 xc2 = xc + 1
@@ -675,7 +1083,8 @@ def battleship():
                     player_board[yc][xc3] = '3'
                     break
                 else:
-                    print 'Your coordinates for this ship are colliding with the coordinates for another ship. Please re-enter the coordinates carefully and pick a direction which won\'t collide with another ship.'
+                    screen.addstr('Your coordinates for this ship are colliding with the coordinates for another ship. Please re-enter the coordinates carefully and pick a direction which won\'t collide with another ship.')
+                    wait()
                     continue
             else:
                 xc2 = xc - 1
@@ -686,131 +1095,264 @@ def battleship():
                     player_board[yc][xc3] = '3'
                     break
                 else:
-                    print 'Your coordinates for this ship are colliding with the coordinates for another ship. Please re-enter the coordinates carefully and pick a direction which won\'t collide with another ship.'
+                    screen.addstr('Your coordinates for this ship are colliding with the coordinates for another ship. Please re-enter the coordinates carefully and pick a direction which won\'t collide with another ship.')
+                    wait()
                     continue
-
+        screen.clear()
+        wait()
     def make_player_ship4():
-        print 'Now we will generate your fourth ship. Please answer the following questions correctly, because if your answer doesn\'t meet our set requirements, the question will be asked again.'
+        screen.clear()
+        screen.refresh()
+        screen.addstr(0, 0, 'Now we will generate your fourth ship. Please answer the following questions correctly, because if your answer doesn\'t meet our set requirements, the question will be asked again.\n')
+        screen.refresh()
+        wait()
         while True:
             while True:
                 try:
-                    x = int(raw_input('Where do you want the first x coordinate of this ship to be? Enter a number between 0 to 9: '))
+                    screen.clear()
+                    prompt_str = 'Where do you want the first x coordinate of this ship to be? Enter a number between 0 to 9: '
+                    l = len(prompt_str)
+                    screen.addstr(0, 0, prompt_str)
+                    x = int(screen.getstr(0, l))
                     while x >= 10 or x <= -1:
-                        print 'You didn\'t enter a number between 0 and 9.'
-                        x = int(raw_input('Where do you want the first x coordinate of this ship to be? Enter a number between 0 to 9: '))
+                        screen.clear()
+                        screen.addstr(0, 0, 'You didn\'t enter a number between 0 and 9.')
+                        screen.refresh()
+                        wait()
+                        screen.clear()
+                        screen.addstr(0, 0, prompt_str)
+                        x = int(screen.getstr(0, l))
                     break
                 except:
-                    print 'You didn\'t enter a number between 0 and 9.'
-
+                    screen.clear()
+                    screen.addstr(0, 0, 'You didn\'t enter a number between 0 and 9.')
+                    screen.refresh()
+                    wait()
+            screen.clear()
+            wait()
             while True:
                 try:
-                    y = int(raw_input('Where do you want the first y coordinate of this ship to be? Enter a number between 0 to 9: '))
+                    prompt_str = 'Where do you want the first y coordinate of this ship to be? Enter a number between 0 to 9: '
+                    l = len(prompt_str)
+                    screen.addstr(0, 0, prompt_str)
+                    y = int(screen.getstr(0, l))
                     while y >= 10 or y <= -1:
-                        print 'You didn\'t enter a number between 0 and 9.'
-                        y = int(raw_input('Where do you want the first y coordinate of this ship to be? Enter a number between 0 to 9: '))
+                        screen.clear()
+                        screen.addstr(0, 0, 'You didn\'t enter a number between 0 and 9.')
+                        screen.refresh()
+                        wait()
+                        screen.clear()
+                        screen.addstr(0, 0, prompt_str)
+                        y = int(screen.getstr(0, l))
                     break
                 except:
-                    print 'You didn\'t enter a number between 0 and 9.'
+                    screen.clear()
+                    screen.addstr(0, 0, 'You didn\'t enter a number between 0 and 9.')
+                    screen.refresh()
+                    wait()
+            screen.clear()
+            wait()
             xc = x
             yc = 9 - y
-            if xc <= 1 and yc != 1 and yc != 8 and yc != 0 and yc != 9 and yc != 2 and yc != 7:
+            if xc <= 2 and yc != 1 and yc != 8 and yc != 0 and yc != 9 and yc != 2 and yc != 7:
                 while True:
                     try:
-                        zc = raw_input('Which direction do you want your ship to extend in? Enter up, down, or right: ').lower()
+                        prompt_str = 'Which direction do you want your ship to extend in? Enter up, down, or right: '
+                        l = len(prompt_str)
+                        screen.addstr(0, 0, prompt_str)
+                        zc = screen.getstr(0, l).lower()
                         while zc != 'up' and zc != 'down' and zc != 'right':
-                            print 'You didn\'t enter a direction that was allowed.'
-                            zc = raw_input('Which direction do you want your ship to extend in? Enter up, down, or right: ').lower()
+                            screen.clear()
+                            screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                            screen.refresh()
+                            wait()
+                            screen.clear()
+                            screen.addstr(0, 0, prompt_str)
+                            zc = screen.getstr(0, l).lower()
                         break
                     except:
-                        print 'You didn\'t enter a direction that was allowed.'
+                        screen.clear()
+                        screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                        screen.refresh()
+                        wait()
 
-            elif xc >= 8 and yc != 1 and yc != 8 and yc != 0 and yc != 9 and yc != 2 and yc != 7:
+            elif xc >= 7 and yc != 1 and yc != 8 and yc != 0 and yc != 9 and yc != 2 and yc != 7:
                 while True:
                     try:
-                        zc = raw_input('Which direction do you want your ship to extend in? Enter up, down, or left: ').lower()
+                        prompt_str = 'Which direction do you want your ship to extend in? Enter up, down, or left: '
+                        l = len(prompt_str)
+                        screen.addstr(0, 0, prompt_str)
+                        zc = screen.getstr(0, l).lower()
                         while zc != 'up' and zc != 'down' and zc != 'left':
-                            print 'You didn\'t enter a direction that was allowed.'
-                            zc = raw_input('Which direction do you want your ship to extend in? Enter up, down, or left: ').lower()
+                            screen.clear()
+                            screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                            screen.refresh()
+                            wait()
+                            screen.clear()
+                            screen.addstr(0, 0, prompt_str)
+                            zc = screen.getstr(0, l).lower()
                         break
                     except:
-                        print 'You didn\'t enter a direction that was allowed.'
+                        screen.clear()
+                        screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                        screen.refresh()
+                        wait()
 
-            elif yc <= 1 and xc != 1 and xc != 8 and xc != 0 and xc != 9 and xc != 2 and xc != 7:
+            elif yc <= 2 and xc != 2  and xc != 7 and xc != 1 and xc != 8 and xc != 0 and xc != 9:
                 while True:
                     try:
-                        zc = raw_input('Which direction do you want your ship to extend in? Enter down, left, or right: ').lower()
+                        prompt_str = 'Which direction do you want your ship to extend in? Enter down, left, or right: '
+                        l = len(prompt_str)
+                        screen.addstr(0, 0, prompt_str)
+                        zc = screen.getstr(0, l).lower()
                         while zc != 'left' and zc != 'down' and zc != 'right':
-                            print 'You didn\'t enter a direction that was allowed.'
-                            zc = raw_input('Which direction do you want your ship to extend in? Enter down, left, or right: ').lower()
+                            screen.clear()
+                            screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                            screen.refresh()
+                            wait()
+                            screen.clear()
+                            screen.addstr(0, 0, prompt_str)
+                            zc = screen.getstr(0, l).lower()
                         break
                     except:
-                        print 'You didn\'t enter a direction that was allowed.'
+                        screen.clear()
+                        screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                        screen.refresh()
+                        wait()
 
-            elif yc >= 8 and xc != 1 and xc != 8 and xc != 0 and xc != 9 and xc != 2 and xc != 7:
+            elif yc >= 7 and xc != 2  and xc != 7 and xc != 1 and xc != 8 and xc != 0 and xc != 9:
                 while True:
                     try:
-                        zc = raw_input('Which direction do you want your ship to extend in? Enter up, left, or right: ').lower()
-                        while zc != 'left' and zc != 'up' and zc != 'right':
-                            print 'You didn\'t enter a direction that was allowed.'
-                            zc = raw_input('Which direction do you want your ship to extend in? Enter up, left, or right: ').lower()
+                        prompt_str = 'Which direction do you want your ship to extend in? Enter up, left, or right: '
+                        l = len(prompt_str)
+                        screen.addstr(0, 0, prompt_str)
+                        zc = screen.getstr(0, l).lower()
+                        while zc != 'up' and zc != 'left' and zc != 'right':
+                            screen.clear()
+                            screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                            screen.refresh()
+                            wait()
+                            screen.clear()
+                            screen.addstr(0, 0, prompt_str)
+                            zc = screen.getstr(0, l).lower()
                         break
                     except:
-                        print 'You didn\'t enter a direction that was allowed.'
+                        screen.clear()
+                        screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                        screen.refresh()
+                        wait()
 
             elif xc <= 2 and yc <= 2:
                 while True:
                     try:
-                        zc = raw_input('Which direction do you want your ship to extend in? Enter down or right: ').lower()
+                        prompt_str = 'Which direction do you want your ship to extend in? Enter down or right: '
+                        l = len(prompt_str)
+                        screen.addstr(0, 0, prompt_str)
+                        zc = screen.getstr(0, l).lower()
                         while zc != 'down' and zc != 'right':
-                            print 'You didn\'t enter a direction that was allowed.'
-                            zc = raw_input('Which direction do you want your ship to extend in? Enter down or right: ').lower()
+                            screen.clear()
+                            screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                            screen.refresh()
+                            wait()
+                            screen.clear()
+                            screen.addstr(0, 0, prompt_str)
+                            zc = screen.getstr(0, l).lower()
                         break
                     except:
-                        print 'You didn\'t enter a direction that was allowed.'
+                        screen.clear()
+                        screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                        screen.refresh()
+                        wait()
 
             elif xc <= 2 and yc >= 7:
                 while True:
                     try:
-                        zc = raw_input('Which direction do you want your ship to extend in? Enter up or right: ').lower()
+                        prompt_str = 'Which direction do you want your ship to extend in? Enter up or right: '
+                        l = len(prompt_str)
+                        screen.addstr(0, 0, prompt_str)
+                        zc = screen.getstr(0, l).lower()
                         while zc != 'up' and zc != 'right':
-                            print 'You didn\'t enter a direction that was allowed.'
-                            zc = raw_input('Which direction do you want your ship to extend in? Enter up or right: ').lower()
+                            screen.clear()
+                            screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                            screen.refresh()
+                            wait()
+                            screen.clear()
+                            screen.addstr(0, 0, prompt_str)
+                            zc = screen.getstr(0, l).lower()
                         break
                     except:
-                        print 'You didn\'t enter a direction that was allowed.'
+                        screen.clear()
+                        screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                        screen.refresh()
+                        wait()
 
             elif xc >= 7 and yc >= 7:
                 while True:
                     try:
-                        zc = raw_input('Which direction do you want your ship to extend in? Enter up or left: ').lower()
+                        prompt_str = 'Which direction do you want your ship to extend in? Enter up or left: '
+                        l = len(prompt_str)
+                        screen.addstr(0, 0, prompt_str)
+                        zc = screen.getstr(0, l).lower()
                         while zc != 'up' and zc != 'left':
-                            print 'You didn\'t enter a direction that was allowed.'
-                            zc = raw_input('Which direction do you want your ship to extend in? Enter up or left: ').lower()
+                            screen.clear()
+                            screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                            screen.refresh()
+                            wait()
+                            screen.clear()
+                            screen.addstr(0, 0, prompt_str)
+                            zc = screen.getstr(0, l).lower()
                         break
                     except:
-                        print 'You didn\'t enter a direction that was allowed.'
+                        screen.clear()
+                        screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                        screen.refresh()
+                        wait()
 
             elif xc >= 7 and yc <= 2:
                 while True:
                     try:
-                        zc = raw_input('Which direction do you want your ship to extend in? Enter down or left: ').lower()
+                        prompt_str = 'Which direction do you want your ship to extend in? Enter down or left: '
+                        l = len(prompt_str)
+                        screen.addstr(0, 0, prompt_str)
+                        zc = screen.getstr(0, l).lower()
                         while zc != 'down' and zc != 'left':
-                            print 'You didn\'t enter a direction that was allowed.'
-                            zc = raw_input('Which direction do you want your ship to extend in? Enter down or left: ').lower()
+                            screen.clear()
+                            screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                            screen.refresh()
+                            wait()
+                            screen.clear()
+                            screen.addstr(0, 0, prompt_str)
+                            zc = screen.getstr(0, l).lower()
                         break
                     except:
-                        print 'You didn\'t enter a direction that was allowed.'
+                        screen.clear()
+                        screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                        screen.refresh()
+                        wait()
 
             else:
                 while True:
                     try:
-                        zc = raw_input('Which direction do you want your ship to extend in? Enter up, down, left, or right: ').lower()
-                        while zc != 'down' and zc != 'right' and zc != 'left' and zc != 'up':
-                            print 'You didn\'t enter a direction that was allowed.'
-                            zc = raw_input('Which direction do you want your ship to extend in? Enter up, down, left, or right: ').lower()
+                        prompt_str = 'Which direction do you want your ship to extend in? Enter up, down, left, or right: '
+                        l = len(prompt_str)
+                        screen.addstr(0, 0, prompt_str)
+                        zc = screen.getstr(0, l).lower()
+                        while zc != 'up' and zc != 'down' and zc != 'left' and zc != 'right':
+                            screen.clear()
+                            screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                            screen.refresh()
+                            wait()
+                            screen.clear()
+                            screen.addstr(0, 0, prompt_str)
+                            zc = screen.getstr(0, l).lower()
                         break
                     except:
-                        print 'You didn\'t enter a direction that was allowed.'
+                        screen.clear()
+                        screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                        screen.refresh()
+                        wait()
+                screen.clear()
+                wait()
             if zc == 'up':
                 yc2 = yc - 1
                 yc3 = yc - 2
@@ -822,7 +1364,8 @@ def battleship():
                     player_board[yc4][xc] = '4'
                     break
                 else:
-                    print 'Your coordinates for this ship are colliding with the coordinates for another ship. Please re-enter the coordinates carefully and pick a direction which won\'t collide with another ship.'
+                    screen.addstr('Your coordinates for this ship are colliding with the coordinates for another ship. Please re-enter the coordinates carefully and pick a direction which won\'t collide with another ship.')
+                    wait()
                     continue
             elif zc == 'down':
                 yc2 = yc + 1
@@ -835,7 +1378,8 @@ def battleship():
                     player_board[yc4][xc] = '4'
                     break
                 else:
-                    print 'Your coordinates for this ship are colliding with the coordinates for another ship. Please re-enter the coordinates carefully and pick a direction which won\'t collide with another ship.'
+                    screen.addstr('Your coordinates for this ship are colliding with the coordinates for another ship. Please re-enter the coordinates carefully and pick a direction which won\'t collide with another ship.')
+                    wait()
                     continue
             elif zc == 'right':
                 xc2 = xc + 1
@@ -848,7 +1392,8 @@ def battleship():
                     player_board[yc][xc4] = '4'
                     break
                 else:
-                    print 'Your coordinates for this ship are colliding with the coordinates for another ship. Please re-enter the coordinates carefully and pick a direction which won\'t collide with another ship.'
+                    screen.addstr('Your coordinates for this ship are colliding with the coordinates for another ship. Please re-enter the coordinates carefully and pick a direction which won\'t collide with another ship.')
+                    wait()
                     continue
             else:
                 xc2 = xc - 1
@@ -861,131 +1406,265 @@ def battleship():
                     player_board[yc][xc4] = '4'
                     break
                 else:
-                    print 'Your coordinates for this ship are colliding with the coordinates for another ship. Please re-enter the coordinates carefully and pick a direction which won\'t collide with another ship.'
+                    screen.addstr('Your coordinates for this ship are colliding with the coordinates for another ship. Please re-enter the coordinates carefully and pick a direction which won\'t collide with another ship.')
+                    wait()
                     continue
+        screen.clear()
+        wait()
 
     def make_player_ship5():
-        print 'Now we will generate your fifth ship. Please answer the following questions correctly, because if your answer doesn\'t meet our set requirements, the question will be asked again.'
+        screen.clear()
+        screen.refresh()
+        screen.addstr(0, 0, 'Now we will generate your fifth ship. Please answer the following questions correctly, because if your answer doesn\'t meet our set requirements, the question will be asked again.\n')
+        screen.refresh()
+        wait()
         while True:
             while True:
                 try:
-                    x = int(raw_input('Where do you want the first x coordinate of this ship to be? Enter a number between 0 to 9: '))
+                    screen.clear()
+                    prompt_str = 'Where do you want the first x coordinate of this ship to be? Enter a number between 0 to 9: '
+                    l = len(prompt_str)
+                    screen.addstr(0, 0, prompt_str)
+                    x = int(screen.getstr(0, l))
                     while x >= 10 or x <= -1:
-                        print 'You didn\'t enter a number between 0 and 9.'
-                        x = int(raw_input('Where do you want the first x coordinate of this ship to be? Enter a number between 0 to 9: '))
+                        screen.clear()
+                        screen.addstr(0, 0, 'You didn\'t enter a number between 0 and 9.')
+                        screen.refresh()
+                        wait()
+                        screen.clear()
+                        screen.addstr(0, 0, prompt_str)
+                        x = int(screen.getstr(0, l))
                     break
                 except:
-                    print 'You didn\'t enter a number between 0 and 9.'
-
+                    screen.clear()
+                    screen.addstr(0, 0, 'You didn\'t enter a number between 0 and 9.')
+                    screen.refresh()
+                    wait()
+            screen.clear()
+            wait()
             while True:
                 try:
-                    y = int(raw_input('Where do you want the first y coordinate of this ship to be? Enter a number between 0 to 9: '))
+                    prompt_str = 'Where do you want the first y coordinate of this ship to be? Enter a number between 0 to 9: '
+                    l = len(prompt_str)
+                    screen.addstr(0, 0, prompt_str)
+                    y = int(screen.getstr(0, l))
                     while y >= 10 or y <= -1:
-                        print 'You didn\'t enter a number between 0 and 9.'
-                        y = int(raw_input('Where do you want the first y coordinate of this ship to be? Enter a number between 0 to 9: '))
+                        screen.clear()
+                        screen.addstr(0, 0, 'You didn\'t enter a number between 0 and 9.')
+                        screen.refresh()
+                        wait()
+                        screen.clear()
+                        screen.addstr(0, 0, prompt_str)
+                        y = int(screen.getstr(0, l))
                     break
                 except:
-                    print 'You didn\'t enter a number between 0 and 9.'
+                    screen.clear()
+                    screen.addstr(0, 0, 'You didn\'t enter a number between 0 and 9.')
+                    screen.refresh()
+                    wait()
+            screen.clear()
+            wait()
             xc = x
             yc = 9 - y
-            if xc <= 1 and yc != 1 and yc != 8 and yc != 0 and yc != 9 and yc != 2 and yc != 7 and yc != 3 and yc != 6:
+            if xc <= 3 and yc != 1 and yc != 8 and yc != 0 and yc != 9 and yc != 2 and yc != 7 and yc != 3 and yc != 6:
                 while True:
                     try:
-                        zc = raw_input('Which direction do you want your ship to extend in? Enter up, down, or right: ').lower()
+                        prompt_str = 'Which direction do you want your ship to extend in? Enter up, down, or right: '
+                        l = len(prompt_str)
+                        screen.addstr(0, 0, prompt_str)
+                        zc = screen.getstr(0, l).lower()
                         while zc != 'up' and zc != 'down' and zc != 'right':
-                            print 'You didn\'t enter a direction that was allowed.'
-                            zc = raw_input('Which direction do you want your ship to extend in? Enter up, down, or right: ').lower()
+                            screen.clear()
+                            screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                            screen.refresh()
+                            wait()
+                            screen.clear()
+                            screen.addstr(0, 0, prompt_str)
+                            zc = screen.getstr(0, l).lower()
                         break
                     except:
-                        print 'You didn\'t enter a direction that was allowed.'
+                        screen.clear()
+                        screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                        screen.refresh()
+                        wait()
 
-            elif xc >= 8 and yc != 1 and yc != 8 and yc != 0 and yc != 9 and yc != 2 and yc != 7 and yc != 3 and yc != 6:
+            elif xc >= 6 and yc != 1 and yc != 8 and yc != 0 and yc != 9 and yc != 2 and yc != 7 and yc != 3 and yc != 6:
                 while True:
                     try:
-                        zc = raw_input('Which direction do you want your ship to extend in? Enter up, down, or left: ').lower()
+                        prompt_str = 'Which direction do you want your ship to extend in? Enter up, down, or left: '
+                        l = len(prompt_str)
+                        screen.addstr(0, 0, prompt_str)
+                        zc = screen.getstr(0, l).lower()
                         while zc != 'up' and zc != 'down' and zc != 'left':
-                            print 'You didn\'t enter a direction that was allowed.'
-                            zc = raw_input('Which direction do you want your ship to extend in? Enter up, down, or left: ').lower()
+                            screen.clear()
+                            screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                            screen.refresh()
+                            wait()
+                            screen.clear()
+                            screen.addstr(0, 0, prompt_str)
+                            zc = screen.getstr(0, l).lower()
                         break
                     except:
-                        print 'You didn\'t enter a direction that was allowed.'
+                        screen.clear()
+                        screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                        screen.refresh()
+                        wait()
 
-            elif yc <= 1 and xc != 1 and xc != 8 and xc != 0 and xc != 9 and xc != 2 and xc != 7 and xc != 3 and xc != 6:
+            elif yc <= 3 and xc != 2  and xc != 7 and xc != 1 and xc != 8 and xc != 0 and xc != 9 and xc != 3 and xc != 6:
                 while True:
                     try:
-                        zc = raw_input('Which direction do you want your ship to extend in? Enter down, left, or right: ').lower()
+                        prompt_str = 'Which direction do you want your ship to extend in? Enter down, left, or right: '
+                        l = len(prompt_str)
+                        screen.addstr(0, 0, prompt_str)
+                        zc = screen.getstr(0, l).lower()
                         while zc != 'left' and zc != 'down' and zc != 'right':
-                            print 'You didn\'t enter a direction that was allowed.'
-                            zc = raw_input('Which direction do you want your ship to extend in? Enter down, left, or right: ').lower()
+                            screen.clear()
+                            screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                            screen.refresh()
+                            wait()
+                            screen.clear()
+                            screen.addstr(0, 0, prompt_str)
+                            zc = screen.getstr(0, l).lower()
                         break
                     except:
-                        print 'You didn\'t enter a direction that was allowed.'
+                        screen.clear()
+                        screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                        screen.refresh()
+                        wait()
 
-            elif yc >= 8 and xc != 1 and xc != 8 and xc != 0 and xc != 9 and xc != 2 and xc != 7 and xc != 3 and xc != 6:
+            elif yc >= 6 and xc != 2  and xc != 7 and xc != 1 and xc != 8 and xc != 0 and xc != 9 and xc != 3 and xc != 6:
                 while True:
                     try:
-                        zc = raw_input('Which direction do you want your ship to extend in? Enter up, left, or right: ').lower()
-                        while zc != 'left' and zc != 'up' and zc != 'right':
-                            print 'You didn\'t enter a direction that was allowed.'
-                            zc = raw_input('Which direction do you want your ship to extend in? Enter up, left, or right: ').lower()
+                        prompt_str = 'Which direction do you want your ship to extend in? Enter up, left, or rights: '
+                        l = len(prompt_str)
+                        screen.addstr(0, 0, prompt_str)
+                        zc = screen.getstr(0, l).lower()
+                        while zc != 'up' and zc != 'left' and zc != 'right':
+                            screen.clear()
+                            screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                            screen.refresh()
+                            wait()
+                            screen.clear()
+                            screen.addstr(0, 0, prompt_str)
+                            zc = screen.getstr(0, l).lower()
                         break
                     except:
-                        print 'You didn\'t enter a direction that was allowed.'
+                        screen.clear()
+                        screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                        screen.refresh()
+                        wait()
 
             elif xc <= 3 and yc <= 3:
                 while True:
                     try:
-                        zc = raw_input('Which direction do you want your ship to extend in? Enter down or right: ').lower()
+                        prompt_str = 'Which direction do you want your ship to extend in? Enter down or right: '
+                        l = len(prompt_str)
+                        screen.addstr(0, 0, prompt_str)
+                        zc = screen.getstr(0, l).lower()
                         while zc != 'down' and zc != 'right':
-                            print 'You didn\'t enter a direction that was allowed.'
-                            zc = raw_input('Which direction do you want your ship to extend in? Enter down or right: ').lower()
+                            screen.clear()
+                            screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                            screen.refresh()
+                            wait()
+                            screen.clear()
+                            screen.addstr(0, 0, prompt_str)
+                            zc = screen.getstr(0, l).lower()
                         break
                     except:
-                        print 'You didn\'t enter a direction that was allowed.'
+                        screen.clear()
+                        screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                        screen.refresh()
+                        wait()
 
             elif xc <= 3 and yc >= 6:
                 while True:
                     try:
-                        zc = raw_input('Which direction do you want your ship to extend in? Enter up or right: ').lower()
+                        prompt_str = 'Which direction do you want your ship to extend in? Enter up or right: '
+                        l = len(prompt_str)
+                        screen.addstr(0, 0, prompt_str)
+                        zc = screen.getstr(0, l).lower()
                         while zc != 'up' and zc != 'right':
-                            print 'You didn\'t enter a direction that was allowed.'
-                            zc = raw_input('Which direction do you want your ship to extend in? Enter up or right: ').lower()
+                            screen.clear()
+                            screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                            screen.refresh()
+                            wait()
+                            screen.clear()
+                            screen.addstr(0, 0, prompt_str)
+                            zc = screen.getstr(0, l).lower()
                         break
                     except:
-                        print 'You didn\'t enter a direction that was allowed.'
+                        screen.clear()
+                        screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                        screen.refresh()
+                        wait()
 
             elif xc >= 6 and yc >= 6:
                 while True:
                     try:
-                        zc = raw_input('Which direction do you want your ship to extend in? Enter up or left: ').lower()
+                        prompt_str = 'Which direction do you want your ship to extend in? Enter up or left: '
+                        l = len(prompt_str)
+                        screen.addstr(0, 0, prompt_str)
+                        zc = screen.getstr(0, l).lower()
                         while zc != 'up' and zc != 'left':
-                            print 'You didn\'t enter a direction that was allowed.'
-                            zc = raw_input('Which direction do you want your ship to extend in? Enter up or left: ').lower()
+                            screen.clear()
+                            screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                            screen.refresh()
+                            wait()
+                            screen.clear()
+                            screen.addstr(0, 0, prompt_str)
+                            zc = screen.getstr(0, l).lower()
                         break
                     except:
-                        print 'You didn\'t enter a direction that was allowed.'
+                        screen.clear()
+                        screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                        screen.refresh()
+                        wait()
 
             elif xc >= 6 and yc <= 3:
                 while True:
                     try:
-                        zc = raw_input('Which direction do you want your ship to extend in? Enter down or left: ').lower()
+                        prompt_str = 'Which direction do you want your ship to extend in? Enter down or left: '
+                        l = len(prompt_str)
+                        screen.addstr(0, 0, prompt_str)
+                        zc = screen.getstr(0, l).lower()
                         while zc != 'down' and zc != 'left':
-                            print 'You didn\'t enter a direction that was allowed.'
-                            zc = raw_input('Which direction do you want your ship to extend in? Enter down or left: ').lower()
+                            screen.clear()
+                            screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                            screen.refresh()
+                            wait()
+                            screen.clear()
+                            screen.addstr(0, 0, prompt_str)
+                            zc = screen.getstr(0, l).lower()
                         break
                     except:
-                        print 'You didn\'t enter a direction that was allowed.'
+                        screen.clear()
+                        screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                        screen.refresh()
+                        wait()
 
             else:
                 while True:
                     try:
-                        zc = raw_input('Which direction do you want your ship to extend in? Enter up, down, left, or right: ').lower()
-                        while zc != 'down' and zc != 'right' and zc != 'left' and zc != 'up':
-                            print 'You didn\'t enter a direction that was allowed.'
-                            zc = raw_input('Which direction do you want your ship to extend in? Enter up, down, left, or right: ').lower()
+                        prompt_str = 'Which direction do you want your ship to extend in? Enter up, down, left, or right: '
+                        l = len(prompt_str)
+                        screen.addstr(0, 0, prompt_str)
+                        zc = screen.getstr(0, l).lower()
+                        while zc != 'up' and zc != 'down' and zc != 'left' and zc != 'right':
+                            screen.clear()
+                            screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                            screen.refresh()
+                            wait()
+                            screen.clear()
+                            screen.addstr(0, 0, prompt_str)
+                            zc = screen.getstr(0, l).lower()
                         break
                     except:
-                        print 'You didn\'t enter a direction that was allowed.'
+                        screen.clear()
+                        screen.addstr(0, 0, 'You didn\'t enter a direction that was allowed.')
+                        screen.refresh()
+                        wait()
+                screen.clear()
+                wait()
             if zc == 'up':
                 yc2 = yc - 1
                 yc3 = yc - 2
@@ -999,13 +1678,14 @@ def battleship():
                     player_board[yc5][xc] = '5'
                     break
                 else:
-                    print 'Your coordinates for this ship are colliding with the coordinates for another ship. Please re-enter the coordinates carefully and pick a direction which won\'t collide with another ship.'
+                    screen.addstr('Your coordinates for this ship are colliding with the coordinates for another ship. Please re-enter the coordinates carefully and pick a direction which won\'t collide with another ship.')
+                    wait()
                     continue
             elif zc == 'down':
                 yc2 = yc + 1
                 yc3 = yc + 2
                 yc4 = yc + 3
-                yc5 = yc + 4
+                yc4 = yc + 4
                 if player_board[yc][xc] == 'O' and player_board[yc2][xc] == 'O' and player_board[yc3][xc] == 'O' and player_board[yc4][xc] == 'O' and player_board[yc5][xc] == 'O':
                     player_board[yc][xc] = '5'
                     player_board[yc2][xc] = '5'
@@ -1014,7 +1694,8 @@ def battleship():
                     player_board[yc5][xc] = '5'
                     break
                 else:
-                    print 'Your coordinates for this ship are colliding with the coordinates for another ship. Please re-enter the coordinates carefully and pick a direction which won\'t collide with another ship.'
+                    screen.addstr('Your coordinates for this ship are colliding with the coordinates for another ship. Please re-enter the coordinates carefully and pick a direction which won\'t collide with another ship.')
+                    wait()
                     continue
             elif zc == 'right':
                 xc2 = xc + 1
@@ -1029,7 +1710,8 @@ def battleship():
                     player_board[yc][xc5] = '5'
                     break
                 else:
-                    print 'Your coordinates for this ship are colliding with the coordinates for another ship. Please re-enter the coordinates carefully and pick a direction which won\'t collide with another ship.'
+                    screen.addstr('Your coordinates for this ship are colliding with the coordinates for another ship. Please re-enter the coordinates carefully and pick a direction which won\'t collide with another ship.')
+                    wait()
                     continue
             else:
                 xc2 = xc - 1
@@ -1044,12 +1726,16 @@ def battleship():
                     player_board[yc][xc5] = '5'
                     break
                 else:
-                    print 'Your coordinates for this ship are colliding with the coordinates for another ship. Please re-enter the coordinates carefully and pick a direction which won\'t collide with another ship.'
+                    screen.addstr('Your coordinates for this ship are colliding with the coordinates for another ship. Please re-enter the coordinates carefully and pick a direction which won\'t collide with another ship.')
+                    wait()
                     continue
+        screen.clear()
+        wait()
 
-    def print_board(a_board):
-        for row in a_board:
-            print " ".join(row)
+    def print_board(a_board, x = 0, y = 0):
+        for i, row in enumerate(a_board):
+            screen.addstr(x + i, y + 0, " ".join(row))
+            screen.refresh()
 
     def player_view():
         for i in range(0, 10):
@@ -1064,37 +1750,84 @@ def battleship():
         return comp_view_board
 
     def player_turn():
+        #import pdb; pdb.set_trace()
         while True:
             try:
-                guessx = int(raw_input('Where do you want the first x coordinate of your guess to be? Enter a number between 0 to 9: '))
+                prompt_str = 'Where do you want the first x coordinate of your guess to be? Enter a number between 0 to 9: '
+                l = len(prompt_str)
+                screen.addstr(0, 0, prompt_str)
+                guessx = int(screen.getstr(0, l))
+                screen.clear()
+                screen.refresh()
                 while guessx >= 10 or guessx <= -1:
-                    print 'You didn\'t enter a number between 0 and 9.'
-                    guessx = int(raw_input('Where do you want the first x coordinate of this ship to be? Enter a number between 0 to 9: '))
+                    screen.addstr(0, 0, 'You didn\'t enter a number between 0 and 9.')
+                    screen.refresh()
+                    wait()
+                    screen.clear()
+                    screen.refresh()
+                    screen.addstr(0, 0, prompt_str)
+                    guessx = int(screen.getstr(0, l))
+                    screen.clear()
+                    screen.refresh()
                 break
             except:
-                print 'You didn\'t enter a number between 0 and 9.'
+                screen.clear()
+                screen.refresh()
+                screen.addstr(0, 0, 'You didn\'t enter a number between 0 and 9.')
+                screen.refresh()
+                wait()
+                screen.clear()
+                screen.refresh()
 
         while True:
             try:
-                guessy = int(raw_input('Where do you want the first y coordinate of this ship to be? Enter a number between 0 to 9: '))
+                prompt_str = 'Where do you want the first y coordinate of your guess to be? Enter a number between 0 to 9: '
+                l = len(prompt_str)
+                screen.addstr(0, 0, prompt_str)
+                guessy = int(screen.getstr(0, l))
+                screen.clear()
+                screen.refresh()
                 while guessy >= 10 or guessy <= -1:
-                    print 'You didn\'t enter a number between 0 and 9.'
-                    guessy = int(raw_input('Where do you want the first y coordinate of this ship to be? Enter a number between 0 to 9: '))
+                    screen.addstr(0, 0, 'You didn\'t enter a number between 0 and 9.')
+                    screen.refresh()
+                    wait()
+                    screen.clear()
+                    screen.refresh()
+                    screen.addstr(0, 0, prompt_str)
+                    guessy = int(screen.getstr(0, l))
+                    screen.clear()
+                    screen.refresh()
                 break
             except:
-                print 'You didn\'t enter a number between 0 and 9.'
+                screen.clear()
+                screen.refresh()
+                screen.addstr(0, 0, 'You didn\'t enter a number between 0 and 9.')
+                screen.refresh()
+                wait()
+                screen.clear()
+                screen.refresh()
         xc = guessx
         yc = 9 - guessy
+        screen.clear()
+        screen.refresh()
         if comp_board[yc][xc] == 'O' or comp_board[yc][xc] == 'M':
-            print 'You didn\'t hit any of their ships.'
-            print 'This is your board containing the guesses of where the computer\'s ships are so far:'
+            screen.addstr(0, 0, 'You didn\'t hit any of their ships.')
+            screen.addstr(1, 0, 'The following board is your board containing the guesses of where the computer\'s ships are so far:')
             player_view_board[yc][xc] = 'M'
-            print_board(player_view_board)
+            print_board(player_view_board, x = 2, y = 0)
+            screen.refresh()
+            wait()
+            screen.clear()
+            screen.refresh()
         else:
-            print 'You hit one of the computer\'s ships!'
-            print 'This is your board containing the guesses of where the computer\'s ships are so far:'
+            screen.addstr(0, 0, 'You hit one of the computer\'s ships!')
+            screen.addstr(1, 0, 'The following board is your board containing the guesses of where the computer\'s ships are so far:')
             player_view_board[yc][xc] = 'H'
-            print_board(player_view_board)
+            print_board(player_view_board, x = 2, y = 0)
+            screen.refresh()
+            wait()
+            screen.clear()
+            screen.refresh()
 
     def comp_turn():
         x = None
@@ -1125,7 +1858,7 @@ def battleship():
                         y = yc
                         break
         if x == None or y == None:
-            print 'The computer is picking randomly!'
+            screen.addstr(0, 0, 'The computer is picking randomly!')
             while True:
                 x = random.randint(0, 9)
                 y = random.randint(0, 9)
@@ -1136,21 +1869,21 @@ def battleship():
                 else:
                     break
         else:
-            print 'The computer is picking smartly!'
+            screen.addstr(0, 0, 'The computer is picking smartly!')
             xc = x
             yc = y
             y = 9 - y
-        print 'The computer guessed the coordinates ' + str(x) + ', ' + str(y)
+        screen.addstr(1, 0, 'The computer guessed the coordinates ' + str(x) + ', ' + str(y))
         if player_board[yc][xc] == 'O':
-            print 'It\'s not a hit!'
-            print 'So far in the battle, this is your board.'
+            screen.addstr(2, 0, 'It\'s not a hit!')
+            screen.addstr(3, 0, 'So far in the battle, the following board is your board.')
             player_board[yc][xc] = 'M'
-            print_board(player_board)
+            print_board(player_board, x = 4, y = 0)
         else:
-            print 'It\'s a hit!'
-            print 'So far in the battle, this is your board.'
+            screen.addstr(2, 0, 'It\'s a hit!')
+            screen.addstr(3, 0, 'So far in the battle, the following board is your board.')
             player_board[yc][xc] = 'H'
-            print_board(player_board)
+            print_board(player_board, x = 4, y = 0)
 
     def win():
         pc = 0
@@ -1164,13 +1897,19 @@ def battleship():
                 if item == 'H':
                     pc += 1
         if pc == 17 and cc != 17:
-            print 'The player has won!'
+            screen.addstr(0, 0, 'The player has won!')
+            wait()
+            curses.endwin()
             sys.exit(1)
         elif pc != 17 and cc == 17:
-            print 'The computer has won!'
+            screen.addstr(0, 0, 'The computer has won!')
+            wait()
+            curses.endwin()
             sys.exit(1)
         elif pc == 17 and cc == 17:
-            print 'It\'s a draw!'
+            screen.addstr(0, 0, 'It\'s a draw!')
+            wait()
+            curses.endwin()
             sys.exit(1)
         else:
             pass
@@ -1181,11 +1920,14 @@ def battleship():
             count += 1
             if count % 2 == 0:
                 comp_turn()
+                wait()
+                screen.clear()
+                screen.refresh()
                 win()
             else:
                 player_turn()
-
-
+                screen.clear()
+                screen.refresh()
 
     make_player_board()
     make_comp_board()
@@ -1195,27 +1937,82 @@ def battleship():
     make_comp_ship4()
     make_comp_ship5()
 
-    print 'This is the game of battleship. It is like the regular battleship, with the same rules, except you will play against the computer. The key is: H = Hit, M = Miss, 1s = Ship 1, 2s = Ship 2, 3s = Ship 3, 4s = Ship 4, 5s = Ship 5, and Os = Unmarked Areas.'
+    screen.addstr(0, 0, 'This is the game of battleship. It is like the regular battleship, with the same rules, except you will play against the computer. The key is: H = Hit, M = Miss, 1s = Ship 1, 2s = Ship 2, 3s = Ship 3, 4s = Ship 4, 5s = Ship 5, and Os = Unmarked Areas.')
+    screen.refresh()
+    wait()
+    screen.clear()
+    screen.refresh()
+    prompt_str = 'Do you want to generate your board randomly? y/n:'
+    screen.addstr(0, 0, prompt_str)
+    generate_player_board_randomly = screen.getstr(0, len(prompt_str)).lower()
+    if generate_player_board_randomly == 'y':
+        for i, row in enumerate(comp_board):
+            for j, item in enumerate(row):
+                player_board[i][j] = comp_board[i][j]
+        comp_board = []
+        make_comp_board()
+        make_comp_ship1()
+        make_comp_ship2()
+        make_comp_ship3()
+        make_comp_ship4()
+        make_comp_ship5()
+    else:
+        make_player_ship1()
+        screen.clear()
+        screen.refresh()
+        screen.addstr(0, 0, 'Your board looks like this:')
+        print_board(player_board, x = 1, y = 0)
+        wait()
+        screen.clear()
+        screen.refresh()
 
-    make_player_ship1()
-    print_board(player_board)
 
-    make_player_ship2()
-    print_board(player_board)
+        make_player_ship2()
+        screen.clear()
+        screen.refresh()
+        screen.addstr(0, 0, 'Your board looks like this:')
+        print_board(player_board, x = 1, y = 0)
+        wait()
+        screen.clear()
+        screen.refresh()
 
-    make_player_ship3()
-    print_board(player_board)
 
-    make_player_ship4()
-    print_board(player_board)
+        make_player_ship3()
+        screen.clear()
+        screen.refresh()
+        screen.addstr(0, 0, 'Your board looks like this:')
+        print_board(player_board, x = 1, y = 0)
+        wait()
+        screen.clear()
+        screen.refresh()
 
-    make_player_ship5()
-    print_board(player_board)
-    print 'That was your board.'
+        make_player_ship4()
+        screen.clear()
+        screen.refresh()
+        screen.addstr(0, 0, 'Your board looks like this:')
+        print_board(player_board, x = 1, y = 0)
+        wait()
+        screen.clear()
+        screen.refresh()
 
-    print 'Now this is your board containing the guesses of where the computer\'s ships are:'
+        make_player_ship5()
+        screen.clear()
+        screen.refresh()
+
+    screen.clear()
+    screen.refresh()
+    screen.addstr(0, 0, 'Your final board looks like this:')
+    print_board(player_board, x = 1, y = 0)
+    wait()
+    screen.clear()
+    screen.refresh()
+
+    screen.addstr(0, 0, 'Your board containing your guesses of where the computer\'s ships are looks like this:')
     player_view()
-    print_board(player_view_board)
+    print_board(player_view_board, x = 1, y = 0)
+    wait()
+    screen.clear()
+    screen.refresh()
 
     turn()
 
